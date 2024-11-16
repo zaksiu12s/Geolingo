@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import geolingoLogo from "./assets/geolingo_logo.png";
 import userIcon from "./assets/user_icon.svg";
 import lockedIcon from "./assets/locked_icon.svg";
+import unlockedIcon from "./assets/unlocked_icon.svg";
 import facebookLogo from "./assets/facebook_logo.svg";
 import googleLogo from "./assets/google_logo.svg";
 import appleLogo from "./assets/apple_logo.svg";
@@ -24,6 +25,7 @@ const Register: React.FC<AuthProps> = ({
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -38,11 +40,16 @@ const Register: React.FC<AuthProps> = ({
     console.log("Logging in with:", { username, password });
   };
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
         <div className="text-center">
           <img
+            draggable="false"
             className="hidden"
             src={geolingoLogo}
             onLoad={handleImageLoad}
@@ -55,11 +62,13 @@ const Register: React.FC<AuthProps> = ({
           {/* <div className="p-3 sm:bg-green-100 sm:rounded-3xl sm:p-10"> */}
           <div className="relative">
             <img
+              draggable="false"
               className="p-3 sm:p-0 w-96 max-w-full absolute"
               src={geolingoLogoShadow}
               alt="Geolingo logo"
             ></img>
             <img
+              draggable="false"
               className="p-3 sm:p-0 w-96 max-w-full animate-fade-down animate-once animate-duration-400 animate-ease-in-out"
               src={geolingoLogo}
               alt="Geolingo logo"
@@ -127,8 +136,9 @@ const Register: React.FC<AuthProps> = ({
               </label>
               <div className="relative">
                 <img
-                  className="absolute top-1/2 -translate-y-1/2 left-2 pointer-events-none"
-                  src={lockedIcon}
+                  className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
+                  src={showPassword ? unlockedIcon : lockedIcon}
+                  onClick={handleTogglePassword}
                   alt="Lock icon"
                   draggable="false"
                 ></img>
@@ -136,7 +146,7 @@ const Register: React.FC<AuthProps> = ({
                   autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
                   id="custom-password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
@@ -145,16 +155,17 @@ const Register: React.FC<AuthProps> = ({
               </div>
               <div className="relative">
                 <img
-                  className="absolute top-1/2 -translate-y-1/2 left-2 pointer-events-none"
-                  src={lockedIcon}
+                  className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
+                  src={showPassword ? unlockedIcon : lockedIcon}
                   alt="Lock icon"
                   draggable="false"
+                  onClick={handleTogglePassword}
                 ></img>
                 <input
                   autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
                   id="repeatPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                   placeholder="Repeat your password"
@@ -173,19 +184,26 @@ const Register: React.FC<AuthProps> = ({
           <div className="flex justify-center gap-1">
             <button type="button" className="w-10 h-10">
               <img
+                draggable="false"
                 className="w-10"
                 src={facebookLogo}
                 alt="Facebook logo"
               ></img>
             </button>
             <button className="border-2 rounded-full w-10 h-10" type="button">
-              <img className="w-10" src={googleLogo} alt="Facebook logo"></img>
+              <img
+                draggable="false"
+                className="w-10"
+                src={googleLogo}
+                alt="Facebook logo"
+              ></img>
             </button>
             <button
               className="border-2 rounded-full flex justify-center w-10 h-10"
               type="button"
             >
               <img
+                draggable="false"
                 className="w-8 h-8"
                 src={appleLogo}
                 alt="Facebook logo"
@@ -216,6 +234,7 @@ const Login: React.FC<AuthProps> = ({
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -230,6 +249,10 @@ const Login: React.FC<AuthProps> = ({
     console.log("Logging in with:", { username, password });
   };
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
@@ -237,6 +260,7 @@ const Login: React.FC<AuthProps> = ({
           <img
             className="hidden"
             src={geolingoLogo}
+            draggable="false"
             onLoad={handleImageLoad}
             alt=""
           ></img>
@@ -249,11 +273,13 @@ const Login: React.FC<AuthProps> = ({
             <img
               className="p-3 sm:p-0 w-96 max-w-full absolute"
               src={geolingoLogoShadow}
+              draggable="false"
               alt="Geolingo logo"
             ></img>
             <img
               className="p-3 sm:p-0 w-96 max-w-full animate-fade-down animate-once animate-duration-400 animate-ease-in-out"
               src={geolingoLogo}
+              draggable="false"
               alt="Geolingo logo"
             ></img>
           </div>
@@ -295,16 +321,17 @@ const Login: React.FC<AuthProps> = ({
               </label>
               <div className="relative">
                 <img
-                  className="absolute top-1/2 -translate-y-full left-2 pointer-events-none"
-                  src={lockedIcon}
+                  className="absolute top-1/2 -translate-y-full left-2 cursor-pointer"
+                  src={showPassword ? unlockedIcon : lockedIcon}
                   alt="Lock icon"
                   draggable="false"
+                  onClick={handleTogglePassword}
                 ></img>
                 <input
                   autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
                   id="custom-password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
@@ -330,19 +357,26 @@ const Login: React.FC<AuthProps> = ({
           <div className="flex justify-center gap-1">
             <button type="button" className="w-10 h-10">
               <img
+                draggable="false"
                 className="w-10"
                 src={facebookLogo}
                 alt="Facebook logo"
               ></img>
             </button>
             <button className="border-2 rounded-full w-10 h-10" type="button">
-              <img className="w-10" src={googleLogo} alt="Facebook logo"></img>
+              <img
+                draggable="false"
+                className="w-10"
+                src={googleLogo}
+                alt="Facebook logo"
+              ></img>
             </button>
             <button
               className="border-2 rounded-full flex justify-center w-10 h-10"
               type="button"
             >
               <img
+                draggable="false"
                 className="w-8 h-8"
                 src={appleLogo}
                 alt="Facebook logo"
