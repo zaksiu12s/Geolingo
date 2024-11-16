@@ -37,7 +37,7 @@ const Register: React.FC<AuthProps> = ({
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center text-black font-mono">
+    <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
         <div className="text-center">
           <img
@@ -64,9 +64,13 @@ const Register: React.FC<AuthProps> = ({
             ></img>
           </div>
           <h2 className="text-center text-4xl font-bold">Register</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-5"
+            autoComplete="off"
+          >
             <div className="flex flex-col">
-              <label htmlFor="email" className="pl-2">
+              <label htmlFor="custom-email" className="pl-2">
                 Email
               </label>
               <div className="relative">
@@ -77,8 +81,9 @@ const Register: React.FC<AuthProps> = ({
                   draggable="false"
                 ></img>
                 <input
+                  autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
-                  id="email"
+                  id="custom-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -89,7 +94,7 @@ const Register: React.FC<AuthProps> = ({
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="username" className="pl-2">
+              <label htmlFor="custom-username" className="pl-2">
                 Username
               </label>
               <div className="relative">
@@ -100,8 +105,9 @@ const Register: React.FC<AuthProps> = ({
                   draggable="false"
                 ></img>
                 <input
+                  autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
-                  id="username"
+                  id="custom-username"
                   type="text"
                   value={username}
                   onChange={(e) => {
@@ -114,7 +120,7 @@ const Register: React.FC<AuthProps> = ({
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="password" className="pl-2">
+              <label htmlFor="custom-password" className="pl-2">
                 Password
               </label>
               <div className="relative">
@@ -125,8 +131,9 @@ const Register: React.FC<AuthProps> = ({
                   draggable="false"
                 ></img>
                 <input
+                  autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
-                  id="password"
+                  id="custom-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -142,6 +149,7 @@ const Register: React.FC<AuthProps> = ({
                   draggable="false"
                 ></img>
                 <input
+                  autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
                   id="repeatPassword"
                   type="password"
@@ -219,7 +227,7 @@ const Login: React.FC<AuthProps> = ({
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center text-black font-mono">
+    <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
         <div className="text-center">
           <img
@@ -246,9 +254,13 @@ const Login: React.FC<AuthProps> = ({
             ></img>
           </div>
           <h2 className="text-center text-4xl font-bold">Login</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-5"
+            autoComplete="off"
+          >
             <div className="flex flex-col">
-              <label htmlFor="username" className="pl-2">
+              <label htmlFor="custom-username" className="pl-2">
                 Username
               </label>
               <div className="relative">
@@ -259,8 +271,9 @@ const Login: React.FC<AuthProps> = ({
                   draggable="false"
                 ></img>
                 <input
+                  autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
-                  id="username"
+                  id="custom-username"
                   type="text"
                   value={username}
                   onChange={(e) => {
@@ -273,7 +286,7 @@ const Login: React.FC<AuthProps> = ({
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="password" className="pl-2">
+              <label htmlFor="custom-password" className="pl-2">
                 Password
               </label>
               <div className="relative">
@@ -284,8 +297,9 @@ const Login: React.FC<AuthProps> = ({
                   draggable="false"
                 ></img>
                 <input
+                  autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
-                  id="password"
+                  id="custom-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

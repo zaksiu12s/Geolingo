@@ -11,7 +11,11 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@fontsource/knewave": "^5.1.0",
+    "@fontsource/open-sans": "^5.1.0",
+    "@fontsource/roboto": "^5.1.0",
     "autoprefixer": "^10.4.20",
+    "google-fonts": "^1.0.0",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
