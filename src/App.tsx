@@ -45,7 +45,7 @@ const Register: React.FC<AuthProps> = ({
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
+    <div className="dark:bg-gray-900 dark:text-white flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
         <div className="text-center">
           <img
@@ -58,7 +58,10 @@ const Register: React.FC<AuthProps> = ({
           <p className="text-gray-500 animate-pulse">Loading...</p>
         </div>
       ) : (
-        <div className="p-3 sm:border-4 sm:border-green-300 sm:rounded-3xl sm:p-10">
+        <div
+          className="p-3 sm:border-4 sm:border-green-300 sm:rounded-3xl sm:p-10
+        dark:bg-gray-900 dark:border-2"
+        >
           {/* <div className="p-3 sm:bg-green-100 sm:rounded-3xl sm:p-10"> */}
           <div className="relative">
             <img
@@ -93,7 +96,8 @@ const Register: React.FC<AuthProps> = ({
                 ></img>
                 <input
                   autoComplete="off"
-                  className="px-5 py-3 pl-10 w-full border-b-2"
+                  className="px-5 py-3 pl-10 w-full border-b-2
+                  dark:bg-gray-800"
                   id="custom-email"
                   type="email"
                   value={email}
@@ -117,7 +121,8 @@ const Register: React.FC<AuthProps> = ({
                 ></img>
                 <input
                   autoComplete="off"
-                  className="px-5 py-3 pl-10 w-full border-b-2"
+                  className="px-5 py-3 pl-10 w-full border-b-2
+                   dark:bg-gray-800"
                   id="custom-username"
                   type="text"
                   value={username}
@@ -138,14 +143,14 @@ const Register: React.FC<AuthProps> = ({
                 <img
                   className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
                   src={showPassword ? unlockedIcon : lockedIcon}
-                  onTouchStart={handleTogglePassword}
                   onClick={handleTogglePassword}
                   alt="Lock icon"
                   draggable="false"
                 ></img>
                 <input
                   autoComplete="off"
-                  className="px-5 py-3 pl-10 w-full border-b-2"
+                  className="px-5 py-3 pl-10 w-full border-b-2
+                   dark:bg-gray-800"
                   id="custom-password"
                   type={showPassword ? "text" : "password"}
                   value={password}
@@ -160,12 +165,12 @@ const Register: React.FC<AuthProps> = ({
                   src={showPassword ? unlockedIcon : lockedIcon}
                   alt="Lock icon"
                   draggable="false"
-                  onTouchStart={handleTogglePassword}
                   onClick={handleTogglePassword}
                 ></img>
                 <input
                   autoComplete="off"
-                  className="px-5 py-3 pl-10 w-full border-b-2"
+                  className="px-5 py-3 pl-10 w-full border-b-2
+                   dark:bg-gray-800"
                   id="repeatPassword"
                   type={showPassword ? "text" : "password"}
                   value={repeatPassword}
