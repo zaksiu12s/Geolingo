@@ -18,6 +18,8 @@ const Register: React.FC<AuthProps> = ({
   setUsername,
   username,
 }) => {
+  localStorage.setItem("isRegistering", "true");
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -210,6 +212,8 @@ const Login: React.FC<AuthProps> = ({
   setUsername,
   username,
 }) => {
+  localStorage.setItem("isRegistering", "false");
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [password, setPassword] = useState("");
 
@@ -361,7 +365,11 @@ const Login: React.FC<AuthProps> = ({
 };
 
 function App() {
-  const [isRegistering, setIsRegistering] = useState(false);
+  const isBrowserRegistering = localStorage.getItem("isRegistering");
+
+  const [isRegistering, setIsRegistering] = useState(
+    isBrowserRegistering == "true"
+  );
   const [username, setUsername] = useState("");
 
   return (
