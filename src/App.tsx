@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import geolingoLogo from "./assets/geolingo_logo.png";
 import userIcon from "./assets/user_icon.svg";
 import lockedIcon from "./assets/locked_icon.svg";
@@ -138,6 +138,7 @@ const Register: React.FC<AuthProps> = ({
                 <img
                   className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
                   src={showPassword ? unlockedIcon : lockedIcon}
+                  onTouchStart={handleTogglePassword}
                   onClick={handleTogglePassword}
                   alt="Lock icon"
                   draggable="false"
@@ -159,6 +160,7 @@ const Register: React.FC<AuthProps> = ({
                   src={showPassword ? unlockedIcon : lockedIcon}
                   alt="Lock icon"
                   draggable="false"
+                  onTouchStart={handleTogglePassword}
                   onClick={handleTogglePassword}
                 ></img>
                 <input
@@ -230,6 +232,7 @@ const Login: React.FC<AuthProps> = ({
   setUsername,
   username,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   localStorage.setItem("isRegistering", "false");
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -251,6 +254,16 @@ const Login: React.FC<AuthProps> = ({
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
+    if (inputRef.current) {
+      const input = inputRef.current;
+      const selectionStart = input.selectionStart;
+      const selectionEnd = input.selectionEnd;
+
+      setTimeout(() => {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd); // Set cursor at the end
+      }, 0);
+    }
   };
 
   return (
@@ -328,6 +341,7 @@ const Login: React.FC<AuthProps> = ({
                   onClick={handleTogglePassword}
                 ></img>
                 <input
+                  ref={inputRef}
                   autoComplete="off"
                   className="px-5 py-3 pl-10 w-full border-b-2"
                   id="custom-password"
