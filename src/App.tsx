@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import Loading from "./helpers/loading";
+
 import geolingoLogo from "./assets/geolingo_logo.png";
 import userIcon from "./assets/user_icon.svg";
 import lockedIcon from "./assets/locked_icon.svg";
@@ -141,7 +143,7 @@ const Register: React.FC<AuthProps> = ({
             onLoad={handleImageLoad}
             alt=""
           ></img>
-          <p className="text-gray-500 animate-pulse">Loading...</p>
+          <Loading />
         </div>
       ) : (
         <div
@@ -436,7 +438,7 @@ const Login: React.FC<AuthProps> = ({
             onLoad={handleImageLoad}
             alt=""
           ></img>
-          <p className="text-gray-500 animate-pulse">Loading...</p>
+          <Loading />
         </div>
       ) : (
         <div className="p-3 sm:border-4 sm:border-green-300 sm:rounded-3xl sm:p-10">
