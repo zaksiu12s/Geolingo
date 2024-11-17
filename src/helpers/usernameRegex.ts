@@ -1,0 +1,1 @@
+export default /^[a-z0-9_-]{3,15}$/;

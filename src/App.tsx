@@ -8,16 +8,21 @@ import googleLogo from "./assets/google_logo.svg";
 import appleLogo from "./assets/apple_logo.svg";
 import geolingoLogoShadow from "./assets/geolingo_logo_shadow.png";
 
+import emailRegex from "./helpers/emailRegex";
+import usernameRegex from "./helpers/usernameRegex";
+
 interface AuthProps {
   setIsRegistering: React.Dispatch<React.SetStateAction<boolean>>;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   username: string;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Register: React.FC<AuthProps> = ({
   setIsRegistering,
   setUsername,
   username,
+  setIsLoggedIn,
 }) => {
   localStorage.setItem("isRegistering", "true");
 
@@ -26,6 +31,7 @@ const Register: React.FC<AuthProps> = ({
   const [repeatPassword, setRepeatPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -37,11 +43,71 @@ const Register: React.FC<AuthProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Logging in with:", { username, password });
+    setErrorMessage("");
+
+    setEmail(email.trim());
+    setUsername(username.trim());
+    setPassword(password.trim());
+    setRepeatPassword(repeatPassword.trim());
+
+    if (!email) {
+      setErrorMessage("Enter email");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Invalid email address");
+      return;
+    }
+
+    if (!username) {
+      setErrorMessage("Enter username");
+      return;
+    }
+
+    if (!usernameRegex.test(username)) {
+      setErrorMessage(
+        "Invalid username, only letters, numbers, _ and - are allowed"
+      );
+      return;
+    }
+
+    if (!password) {
+      setErrorMessage("Enter password");
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+
+    handleSubmitAnimation();
+    setTimeout(() => {
+      console.log("Logging in with:", { username, password });
+      setIsLoggedIn(true);
+      setIsRegistering(false);
+
+      localStorage.setItem("username", username);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("email", email);
+      localStorage.setItem("isRegistering", "false");
+    }, 2000);
   };
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const [isSubmitButtonAnimated, setIsSubmitButtonAnimated] = useState(false);
+  const [isRotatingCircle, setIsRotatingCircle] = useState(false);
+
+  const handleSubmitAnimation = () => {
+    setIsSubmitButtonAnimated(!isSubmitButtonAnimated);
+
+    setTimeout(() => {
+      setIsRotatingCircle(!isSubmitButtonAnimated);
+    }, 100);
   };
 
   return (
@@ -79,6 +145,7 @@ const Register: React.FC<AuthProps> = ({
           </div>
           <h2 className="text-center text-4xl font-bold">Register</h2>
           <form
+            noValidate
             onSubmit={handleSubmit}
             className="flex flex-col gap-5"
             autoComplete="off"
@@ -181,9 +248,34 @@ const Register: React.FC<AuthProps> = ({
               </div>
             </div>
 
-            <button type="submit" className="bg-green-400 px-3 py-2 text-white">
-              Register
-            </button>
+            <div className="w-full flex justify-center items-center flex-col relative">
+              <div
+                className={
+                  "z-10 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-full px-3 py-2 transition-all duration-300 bg-green-400 border-8 border-green-400 " +
+                  (isSubmitButtonAnimated
+                    ? "w-10 h-10  rounded-full bg-transparent"
+                    : " w-full bg-green-400")
+                }
+              >
+                <div className={isRotatingCircle ? "block" : "hidden"}>
+                  <div className="z-20 absolute bg-white w-2 h-10 left-2 -top-2 animate-spinBorder"></div>
+                  <div className="z-30 absolute bg-green-400 w-3 h-3 left-[6px] top-[6px] rounded-full"></div>
+                </div>
+              </div>
+              <button type="submit" className={"px-3 py-2 z-40 w-full"}>
+                <span
+                  className={
+                    "text-white z-40 transition delay-75 " +
+                    (isSubmitButtonAnimated ? "opacity-0" : "opacity-100")
+                  }
+                >
+                  Register
+                </span>
+              </button>
+            </div>
+            <p className="text-red-500 max-w-96 self-start -mt-5">
+              {errorMessage}
+            </p>
           </form>
           <p className="text-gray-500 text-center mt-10 mb-3">
             Or Sign Up using
@@ -236,6 +328,7 @@ const Login: React.FC<AuthProps> = ({
   setIsRegistering,
   setUsername,
   username,
+  setIsLoggedIn,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   localStorage.setItem("isRegistering", "false");
@@ -243,6 +336,7 @@ const Login: React.FC<AuthProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -254,7 +348,29 @@ const Login: React.FC<AuthProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Logging in with:", { username, password });
+    setErrorMessage("");
+
+    setUsername(username.trim());
+    setPassword(password.trim());
+
+    if (username == "") {
+      setErrorMessage("Enter username");
+      return;
+    }
+
+    if (password == "") {
+      setErrorMessage("Enter password");
+      return;
+    }
+
+    // SERVER REQUEST IN FUTURE
+    setTimeout(() => {
+      console.log("Logging in with:", { username, password });
+
+      setIsLoggedIn(true);
+      localStorage.setItem("username", username);
+      localStorage.setItem("isLoggedIn", "true");
+    }, 1000);
   };
 
   const handleTogglePassword = () => {
@@ -303,6 +419,7 @@ const Login: React.FC<AuthProps> = ({
           </div>
           <h2 className="text-center text-4xl font-bold">Login</h2>
           <form
+            noValidate
             onSubmit={handleSubmit}
             className="flex flex-col gap-5"
             autoComplete="off"
@@ -366,9 +483,16 @@ const Login: React.FC<AuthProps> = ({
               </div>
             </div>
 
-            <button type="submit" className="bg-green-400 px-3 py-2 text-white">
-              Login
-            </button>
+            <div>
+              <button
+                type="submit"
+                className="block w-full bg-green-400 px-3 py-2 text-white"
+                onClick={handleSubmit}
+              >
+                Login
+              </button>
+              <p className="block text-red-500">{errorMessage}</p>
+            </div>
           </form>
           <p className="text-gray-500 text-center mt-10 mb-3">
             Or Sign Up using
@@ -419,25 +543,35 @@ const Login: React.FC<AuthProps> = ({
 
 function App() {
   const isBrowserRegistering = localStorage.getItem("isRegistering");
+  const isBrowserLoggedIn = localStorage.getItem("isLoggedIn");
+  const browserUsername = localStorage.getItem("username");
 
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    isBrowserLoggedIn == "true" &&
+      browserUsername != null &&
+      browserUsername.length > 0
+  );
   const [isRegistering, setIsRegistering] = useState(
     isBrowserRegistering == "true"
   );
   const [username, setUsername] = useState("");
-
   return (
     <>
-      {isRegistering ? (
+      {isLoggedIn ? (
+        <div>HELLO USER</div>
+      ) : isRegistering ? (
         <Register
           setIsRegistering={setIsRegistering}
           setUsername={setUsername}
           username={username}
+          setIsLoggedIn={setIsLoggedIn}
         />
       ) : (
         <Login
           setIsRegistering={setIsRegistering}
           setUsername={setUsername}
           username={username}
+          setIsLoggedIn={setIsLoggedIn}
         />
       )}
     </>

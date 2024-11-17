@@ -6,6 +6,15 @@ export default {
   darkMode: "off",
   theme: {
     extend: {
+      keyframes: {
+        spinBorder: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
+      animation: {
+        spinBorder: "spinBorder 2s linear infinite",
+      },
       fontFamily: {
         // roboto: ["Roboto", "sans-serif"],
         // knewave: ["Knewave", "sans-serif"],
