@@ -41,6 +41,7 @@ const Register: React.FC<AuthProps> = ({
     setIsRegistering(false);
   };
 
+  const [canChangeAnimation, setCanChangeAnimation] = useState(true);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -92,8 +93,12 @@ const Register: React.FC<AuthProps> = ({
       return;
     }
 
-    handleSubmitAnimation();
+    if (canChangeAnimation) {
+      setCanChangeAnimation(false);
+      handleSubmitAnimation();
+    }
     setTimeout(() => {
+      setCanChangeAnimation(true);
       console.log("Logging in with:", { username, password });
       setIsLoggedIn(true);
       setIsRegistering(false);
@@ -356,6 +361,7 @@ const Login: React.FC<AuthProps> = ({
     setIsRegistering(true);
   };
 
+  const [canChangeAnimation, setCanChangeAnimation] = useState(true);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -373,9 +379,13 @@ const Login: React.FC<AuthProps> = ({
       return;
     }
 
-    handleSubmitAnimation();
+    if (canChangeAnimation) {
+      setCanChangeAnimation(false);
+      handleSubmitAnimation();
+    }
     // SERVER REQUEST IN FUTURE
     setTimeout(() => {
+      setCanChangeAnimation(true);
       console.log("Logging in with:", { username, password });
 
       setIsLoggedIn(true);
@@ -539,16 +549,20 @@ const Login: React.FC<AuthProps> = ({
           <div className="flex justify-center gap-1">
             <button type="button" className="w-10 h-10">
               <img
+                width="40px"
+                height="40px"
                 draggable="false"
-                className="w-10"
+                className="w-10 h-10"
                 src={facebookLogo}
                 alt="Facebook logo"
               ></img>
             </button>
             <button className="border-2 rounded-full w-10 h-10" type="button">
               <img
+                width="40px"
+                height="40px"
                 draggable="false"
-                className="w-10"
+                className="w-10 h-10"
                 src={googleLogo}
                 alt="Facebook logo"
               ></img>
@@ -558,6 +572,8 @@ const Login: React.FC<AuthProps> = ({
               type="button"
             >
               <img
+                width="32px"
+                height="32px"
                 draggable="false"
                 className="w-8 h-8"
                 src={appleLogo}
