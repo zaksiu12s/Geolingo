@@ -9,12 +9,21 @@ import lockedIcon from "../../assets/locked_icon.svg";
 
 const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
   const [activeTab, setActiveTab] = useState("User");
+  const [activeTabAnimate, setActiveTabAnimate] = useState(false);
   const [inputUsername, setInputUsername] = useState(username);
+
+  setTimeout(() => {
+    setActiveTabAnimate(true);
+  }, 10);
 
   const handleActiveTab = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
+    setActiveTabAnimate(false);
 
     setActiveTab(target.id);
+    setTimeout(() => {
+      setActiveTabAnimate(true);
+    }, 10);
   };
 
   const userInfoSubmit = (e: React.FormEvent) => {
@@ -77,7 +86,14 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
           </div>
         </div>
         {activeTab == "User" ? (
-          <div className="flex flex-col p-3">
+          <div
+            className={
+              "transition origin-top-left duration-300 ease-[cubic-bezier(0.68,0.0,0.27,1.1)] " +
+              (activeTabAnimate
+                ? "flex flex-col p-3 relative scale-100"
+                : "flex flex-col p-3 relative scale-0")
+            }
+          >
             <div className="flex items-center justify-start gap-2 p-2 pb-3">
               <div className="bg-green-500 w-16 h-16 rounded-full flex justify-center items-center text-white text-3xl font-bold">
                 <div className="w-full text-center">ZK</div>
@@ -176,7 +192,12 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
         )}
 
         {activeTab == "Integrations" ? (
-          <div>
+          <div
+            className={
+              "transition duration-300 ease-[cubic-bezier(0.68,0.0,0.27,1.1)] origin-top " +
+              (activeTabAnimate ? "scale-100" : "scale-0")
+            }
+          >
             <div>
               BETA (POSSIBILITY OF NOT WORKING: )<br></br>
               <span className="font-bold">Dark mode:</span>{" "}
@@ -188,7 +209,12 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
         )}
 
         {activeTab == "Security" ? (
-          <div>
+          <div
+            className={
+              "transition duration-300 ease-[cubic-bezier(0.68,0.0,0.27,1.1)] origin-top-right " +
+              (activeTabAnimate ? "scale-100" : "scale-0")
+            }
+          >
             <div
               className="bg-red-500 text-white font-bold w-max py-2 px-3 mx-5 cursor-pointer"
               onClick={handleLogout}
