@@ -65,6 +65,16 @@ const Register: React.FC<AuthProps> = ({
       return;
     }
 
+    if (username.length > 15) {
+      setErrorMessage("Username must be at least 15 characters");
+      return;
+    }
+
+    if (username.length < 3) {
+      setErrorMessage("Username must be at least 3 characters");
+      return;
+    }
+
     if (!usernameRegex.test(username)) {
       setErrorMessage(
         "Invalid username, only letters, numbers, _ and - are allowed"
@@ -363,6 +373,7 @@ const Login: React.FC<AuthProps> = ({
       return;
     }
 
+    handleSubmitAnimation();
     // SERVER REQUEST IN FUTURE
     setTimeout(() => {
       console.log("Logging in with:", { username, password });
@@ -385,6 +396,18 @@ const Login: React.FC<AuthProps> = ({
         input.setSelectionRange(selectionStart, selectionEnd); // Set cursor at the end
       }, 0);
     }
+  };
+
+  const [isSubmitButtonAnimated, setIsSubmitButtonAnimated] = useState(false);
+  const [isRotatingCircle, setIsRotatingCircle] = useState(false);
+
+  const handleSubmitAnimation = () => {
+    console.log("toggling");
+    setIsSubmitButtonAnimated(!isSubmitButtonAnimated);
+
+    setTimeout(() => {
+      setIsRotatingCircle(!isSubmitButtonAnimated);
+    }, 100);
   };
 
   return (
@@ -483,16 +506,32 @@ const Login: React.FC<AuthProps> = ({
               </div>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                className="block w-full bg-green-400 px-3 py-2 text-white"
-                onClick={handleSubmit}
+            <div className="w-full flex justify-center items-center flex-col relative">
+              <div
+                className={
+                  "z-10 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-full px-3 py-2 transition-all duration-300 bg-green-400 border-8 border-green-400 " +
+                  (isSubmitButtonAnimated
+                    ? "w-10 h-10  rounded-full bg-transparent"
+                    : " w-full bg-green-400")
+                }
               >
-                Login
+                <div className={isRotatingCircle ? "block" : "hidden"}>
+                  <div className="z-20 absolute bg-white w-2 h-10 left-2 -top-2 animate-spinBorder"></div>
+                  <div className="z-30 absolute bg-green-400 w-3 h-3 left-[6px] top-[6px] rounded-full"></div>
+                </div>
+              </div>
+              <button type="submit" className={"px-3 py-2 z-40 w-full"}>
+                <span
+                  className={
+                    "text-white z-40 transition delay-75 " +
+                    (isSubmitButtonAnimated ? "opacity-0" : "opacity-100")
+                  }
+                >
+                  Login
+                </span>
               </button>
-              <p className="block text-red-500">{errorMessage}</p>
             </div>
+            <p className="block text-red-500 -mt-5">{errorMessage}</p>
           </form>
           <p className="text-gray-500 text-center mt-10 mb-3">
             Or Sign Up using
