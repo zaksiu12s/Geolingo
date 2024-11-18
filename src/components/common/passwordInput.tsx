@@ -22,7 +22,7 @@ const UsernameInput: React.FC<CombinedProps> = ({
   setRepeatPassword,
   repeatPassword,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };

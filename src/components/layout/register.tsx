@@ -26,17 +26,17 @@ const Register: React.FC<AuthProps> = ({
 }) => {
   localStorage.setItem("isRegistering", "true");
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [repeatPassword, setRepeatPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
 
-  const [canChangeAnimation, setCanChangeAnimation] = useState(true);
+  const [canChangeAnimation, setCanChangeAnimation] = useState<boolean>(true);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -106,7 +106,8 @@ const Register: React.FC<AuthProps> = ({
     }, 2000);
   };
 
-  const [isSubmitButtonAnimated, setIsSubmitButtonAnimated] = useState(false);
+  const [isSubmitButtonAnimated, setIsSubmitButtonAnimated] =
+    useState<boolean>(false);
 
   const handleSubmitAnimation = () => {
     setIsSubmitButtonAnimated(!isSubmitButtonAnimated);

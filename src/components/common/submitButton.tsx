@@ -9,7 +9,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
   message,
   isSubmitButtonAnimated,
 }) => {
-  const [isRotatingCircle, setRotatingCircle] = useState(false);
+  const [isRotatingCircle, setRotatingCircle] = useState<boolean>(false);
 
   if (isSubmitButtonAnimated) {
     setTimeout(() => {

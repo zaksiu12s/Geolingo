@@ -24,15 +24,15 @@ const Login: React.FC<AuthProps> = ({
 }) => {
   localStorage.setItem("isRegistering", "false");
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
 
-  const [canChangeAnimation, setCanChangeAnimation] = useState(true);
+  const [canChangeAnimation, setCanChangeAnimation] = useState<boolean>(true);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -65,7 +65,8 @@ const Login: React.FC<AuthProps> = ({
     }, 1000);
   };
 
-  const [isSubmitButtonAnimated, setIsSubmitButtonAnimated] = useState(false);
+  const [isSubmitButtonAnimated, setIsSubmitButtonAnimated] =
+    useState<boolean>(false);
 
   const handleSubmitAnimation = () => {
     console.log("toggling");

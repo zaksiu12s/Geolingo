@@ -4,13 +4,20 @@ import { useState } from "react";
 import UserProps from "../../types/UserProps";
 
 // importing assets
-import userIcon from "../../assets/user_icon.svg";
-import lockedIcon from "../../assets/locked_icon.svg";
+import PasswordInput from "../common/passwordInput";
+import EmailInput from "../common/emailInput";
+import UsernameInput from "../common/usernameInput";
+import SubmitButton from "../common/submitButton";
+import SettingsTab from "../common/settingsTab";
 
 const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
-  const [activeTab, setActiveTab] = useState("User");
-  const [activeTabAnimate, setActiveTabAnimate] = useState(false);
-  const [inputUsername, setInputUsername] = useState(username);
+  const [activeTab, setActiveTab] = useState<string>("User");
+  const [activeTabAnimate, setActiveTabAnimate] = useState<boolean>(false);
+  const [inputUsername, setInputUsername] = useState<string>(username);
+
+  const [password, setPassword] = useState<string>("");
+  const [repeatPassword, setRepeatPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   setTimeout(() => {
     setActiveTabAnimate(true);
@@ -48,42 +55,21 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
           className="mx-1 flex flex-row justify-around text-center items-center relative
            before:content-[''] before:w-full before:h-[2px] before:absolute before:bg-gray-300 before:bottom-0 before:left-0 before:z-0"
         >
-          <div
-            id="User"
-            className={
-              "z-10 w-full px-4 py-2 rounded-tl-lg rounded-tr-lg cursor-pointer  " +
-              (activeTab == "User"
-                ? "bg-green-500 text-white"
-                : "text-gray-600")
-            }
-            onClick={handleActiveTab}
-          >
-            User
-          </div>
-          <div
-            id="Integrations"
-            className={
-              "z-10 w-full px-4 py-2 rounded-tl-lg rounded-tr-lg cursor-pointer " +
-              (activeTab == "Integrations"
-                ? "bg-green-500 text-white"
-                : "text-gray-600")
-            }
-            onClick={handleActiveTab}
-          >
-            Integrations
-          </div>
-          <div
-            id="Security"
-            className={
-              "z-10 w-full px-4 py-2 rounded-tl-lg rounded-tr-lg cursor-pointer " +
-              (activeTab == "Security"
-                ? "bg-green-500 text-white"
-                : "text-gray-600")
-            }
-            onClick={handleActiveTab}
-          >
-            Security
-          </div>
+          <SettingsTab
+            message="User"
+            activeTab={activeTab}
+            handleActiveTab={handleActiveTab}
+          />
+          <SettingsTab
+            message="Integrations"
+            activeTab={activeTab}
+            handleActiveTab={handleActiveTab}
+          />
+          <SettingsTab
+            message="Security"
+            activeTab={activeTab}
+            handleActiveTab={handleActiveTab}
+          />
         </div>
         {activeTab == "User" ? (
           <div
@@ -105,86 +91,21 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
             </div>
 
             <form className="flex flex-col gap-3" onSubmit={userInfoSubmit}>
-              <div className="flex flex-col">
-                <label htmlFor="username" className="font-bold">
-                  Username
-                </label>
-                <div className="relative">
-                  <img
-                    className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
-                    src={userIcon}
-                    alt="Lock icon"
-                    draggable="false"
-                  ></img>
-                  <input
-                    className="px-5 py-3 pl-10 w-full border-b-gray-300 border-b-2"
-                    id="username"
-                    name="username"
-                    value={inputUsername}
-                    onChange={(e) => setInputUsername(e.target.value)}
-                  />
-                </div>
-              </div>
+              <UsernameInput
+                setUsername={setInputUsername}
+                username={inputUsername}
+              />
 
-              <div className="flex flex-col">
-                <label htmlFor="email" className="font-bold">
-                  Email
-                </label>
-                <div className="relative">
-                  <img
-                    className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
-                    src={userIcon}
-                    alt="Lock icon"
-                    draggable="false"
-                  ></img>
-                  <input
-                    className="px-5 py-3 pl-10 w-full border-b-gray-300 border-b-2"
-                    id="email"
-                    name="email"
-                  />
-                </div>
-              </div>
+              <EmailInput setEmail={setEmail} email={email} />
 
-              <div className="flex flex-col">
-                <label htmlFor="password" className="font-bold">
-                  New password
-                </label>
-                <div className="relative">
-                  <img
-                    className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
-                    src={lockedIcon}
-                    alt="Lock icon"
-                    draggable="false"
-                  ></img>
-                  <input
-                    type="password"
-                    className="px-5 py-3 pl-10 w-full border-b-gray-300 border-b-2"
-                    id="password"
-                    name="password"
-                  />
-                </div>
-                <div className="relative">
-                  <img
-                    className="absolute top-1/2 -translate-y-1/2 left-2 cursor-pointer"
-                    src={lockedIcon}
-                    alt="Lock icon"
-                    draggable="false"
-                  ></img>
-                  <input
-                    type="password"
-                    className="px-5 py-3 pl-10 w-full border-b-gray-300 border-b-2"
-                    id="repeat-password"
-                    name="repeat-password"
-                  />
-                </div>
-              </div>
+              <PasswordInput
+                setPassword={setPassword}
+                password={password}
+                setRepeatPassword={setRepeatPassword}
+                repeatPassword={repeatPassword}
+              />
 
-              <button
-                type="submit"
-                className="text-white bg-green-300 py-2 px-3"
-              >
-                Save
-              </button>
+              <SubmitButton message="Save" isSubmitButtonAnimated={false} />
             </form>
           </div>
         ) : (
