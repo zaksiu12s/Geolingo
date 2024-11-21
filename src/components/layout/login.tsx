@@ -22,8 +22,6 @@ const Login: React.FC<AuthProps> = ({
   username,
   setIsLoggedIn,
 }) => {
-  localStorage.setItem("isRegistering", "false");
-
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -73,6 +71,11 @@ const Login: React.FC<AuthProps> = ({
     setIsSubmitButtonAnimated(!isSubmitButtonAnimated);
   };
 
+  const handleSetLogin = () => {
+    setIsRegistering(true);
+    localStorage.setItem("isRegistering", "true");
+  };
+
   return (
     <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
@@ -107,7 +110,7 @@ const Login: React.FC<AuthProps> = ({
           </form>
           <SignUpUsing />
 
-          <ChangeSignInForm setIsRegistering={setIsRegistering} type="login" />
+          <ChangeSignInForm setIsRegistering={handleSetLogin} type="login" />
         </div>
       )}
     </div>

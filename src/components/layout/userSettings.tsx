@@ -10,10 +10,15 @@ import UsernameInput from "../common/usernameInput";
 import SubmitButton from "../common/submitButton";
 import SettingsTab from "../common/settingsTab";
 
-const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
+const UserSettings: React.FC<UserProps> = ({
+  userData,
+  setIsLoggedIn,
+  setIsRegistering,
+  setUserData,
+}) => {
   const [activeTab, setActiveTab] = useState<string>("User");
   const [activeTabAnimate, setActiveTabAnimate] = useState<boolean>(false);
-  const [inputUsername, setInputUsername] = useState<string>(username);
+  const [inputUsername, setInputUsername] = useState<string>(userData.username);
 
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
@@ -38,10 +43,13 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
   };
 
   const handleLogout = () => {
-    localStorage.setItem("isLoggedIn", "false");
-    localStorage.setItem("isRegistering", "false");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("isRegistering");
     localStorage.removeItem("username");
     localStorage.removeItem("email");
+
+    setIsRegistering(false);
+    setUserData.setUsername("");
     setIsLoggedIn(false);
   };
 
@@ -49,7 +57,7 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
     <>
       <div className="font-open-sans p-1">
         <h1 className="text-2xl">
-          Hi <span className="font-bold">{username}</span>!
+          Hi <span className="font-bold">{userData.username}</span>!
         </h1>
         <div
           className="mx-1 flex flex-row justify-around text-center items-center relative
@@ -85,7 +93,7 @@ const UserSettings: React.FC<UserProps> = ({ username, setIsLoggedIn }) => {
                 <div className="w-full text-center">ZK</div>
               </div>
               <div className="flex flex-col">
-                <div>{username}</div>
+                <div>{userData.username}</div>
                 <div className="text-gray-500 text-sm -mt-1">User</div>
               </div>
             </div>
