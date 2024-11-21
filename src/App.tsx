@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 
 import Register from "./components/layout/register";
 import Login from "./components/layout/login";
@@ -57,6 +58,9 @@ function App() {
 
   return (
     <>
+      <Helmet>
+        <meta name="theme-color" content={darkMode ? "#111827" : "#ffffff"} />
+      </Helmet>
       {isLoggedIn ? (
         <UserSettings
           userData={{ username }}
