@@ -9,12 +9,15 @@ import EmailInput from "../common/emailInput";
 import UsernameInput from "../common/usernameInput";
 import SubmitButton from "../common/submitButton";
 import SettingsTab from "../common/settingsTab";
+import InputErrorElement from "../common/inputErrorElement";
 
 const UserSettings: React.FC<UserProps> = ({
   userData,
   setIsLoggedIn,
   setIsRegistering,
   setUserData,
+  setDarkMode,
+  darkMode,
 }) => {
   const [activeTab, setActiveTab] = useState<string>("User");
   const [activeTabAnimate, setActiveTabAnimate] = useState<boolean>(false);
@@ -23,6 +26,9 @@ const UserSettings: React.FC<UserProps> = ({
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+
+  const [isButtonAnimated, setIsButtonAnimated] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   setTimeout(() => {
     setActiveTabAnimate(true);
@@ -40,6 +46,19 @@ const UserSettings: React.FC<UserProps> = ({
 
   const userInfoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
+    if (userData.username == inputUsername) {
+      setErrorMessage("Username cannot be changed");
+      return;
+    }
+
+    setIsButtonAnimated(true);
+    setTimeout(() => {
+      localStorage.setItem("username", inputUsername);
+      setUserData.setUsername(inputUsername);
+
+      setIsButtonAnimated(false);
+    }, 3500);
   };
 
   const handleLogout = () => {
@@ -55,12 +74,15 @@ const UserSettings: React.FC<UserProps> = ({
 
   return (
     <>
-      <div className="font-open-sans p-1">
+      <div
+        className="font-open-sans p-1 min-h-[100svh] overflow-x-hidden
+      dark:bg-gray-800 dark:text-white"
+      >
         <h1 className="text-2xl">
           Hi <span className="font-bold">{userData.username}</span>!
         </h1>
         <div
-          className="mx-1 flex flex-row justify-around text-center items-center relative
+          className="mx-1 flex flex-row text-center items-center relative
            before:content-[''] before:w-full before:h-[2px] before:absolute before:bg-gray-300 before:bottom-0 before:left-0 before:z-0"
         >
           <SettingsTab
@@ -89,8 +111,26 @@ const UserSettings: React.FC<UserProps> = ({
             }
           >
             <div className="flex items-center justify-start gap-2 p-2 pb-3">
-              <div className="bg-green-500 w-16 h-16 rounded-full flex justify-center items-center text-white text-3xl font-bold">
-                <div className="w-full text-center">ZK</div>
+              <div className="bg-green-500 w-[4.5rem] h-[4.5rem] rounded-full flex justify-center items-center text-white text-3xl font-bold">
+                <div className="w-full text-center">
+                  {(userData.username.replace(/\d/g, "").length < 5
+                    ? userData.username.replace(/\d/g, "")[0] +
+                      userData.username.replace(/\d/g, "")[
+                        userData.username.replace(/\d/g, "").length - 1
+                      ]
+                    : userData.username.replace(/\d/g, "")[0] +
+                      userData.username.replace(/\d/g, "")[
+                        Number(
+                          (
+                            userData.username.replace(/\d/g, "").length / 2
+                          ).toFixed(0)
+                        )
+                      ] +
+                      userData.username.replace(/\d/g, "")[
+                        userData.username.replace(/\d/g, "").length - 1
+                      ]
+                  ).toUpperCase()}
+                </div>
               </div>
               <div className="flex flex-col">
                 <div>{userData.username}</div>
@@ -98,13 +138,14 @@ const UserSettings: React.FC<UserProps> = ({
               </div>
             </div>
 
-            <form className="flex flex-col gap-3" onSubmit={userInfoSubmit}>
+            <form className="flex flex-col gap-5" onSubmit={userInfoSubmit}>
               <UsernameInput
                 setUsername={setInputUsername}
+                required={false}
                 username={inputUsername}
               />
 
-              <EmailInput setEmail={setEmail} email={email} />
+              <EmailInput setEmail={setEmail} email={email} required={false} />
 
               <PasswordInput
                 setPassword={setPassword}
@@ -113,7 +154,11 @@ const UserSettings: React.FC<UserProps> = ({
                 repeatPassword={repeatPassword}
               />
 
-              <SubmitButton message="Save" isSubmitButtonAnimated={false} />
+              <SubmitButton
+                message="Save"
+                isSubmitButtonAnimated={isButtonAnimated}
+              />
+              <InputErrorElement errorMessage={errorMessage} />
             </form>
           </div>
         ) : (
@@ -128,9 +173,31 @@ const UserSettings: React.FC<UserProps> = ({
             }
           >
             <div>
-              BETA (POSSIBILITY OF NOT WORKING: )<br></br>
+              <span className="text-3xl font-bold text-red-400 flex justify-center gap-3 items-center sm:justify-start">
+                EXPERIMENTAL
+                <svg
+                  className="w-8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" x2="12.01" y1="17" y2="17" />
+                </svg>
+              </span>
               <span className="font-bold">Dark mode:</span>{" "}
-              <input type="checkbox" />
+              <input
+                className="cursor-pointer"
+                type="checkbox"
+                onClick={() => setDarkMode(!darkMode)}
+                checked={darkMode}
+              />
             </div>
           </div>
         ) : (

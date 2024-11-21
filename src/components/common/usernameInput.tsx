@@ -3,9 +3,14 @@ import userIcon from "../../assets/user_icon.svg";
 export interface UsernameProps {
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   username: string;
+  required?: boolean;
 }
 
-const UsernameInput: React.FC<UsernameProps> = ({ username, setUsername }) => {
+const UsernameInput: React.FC<UsernameProps> = ({
+  username,
+  setUsername,
+  required = false,
+}) => {
   return (
     <div className="flex flex-col">
       <label htmlFor="custom-username" className="pl-2">
@@ -29,7 +34,7 @@ const UsernameInput: React.FC<UsernameProps> = ({ username, setUsername }) => {
             setUsername(e.target.value);
           }}
           placeholder="Enter your username"
-          required
+          required={required}
         />
       </div>
     </div>

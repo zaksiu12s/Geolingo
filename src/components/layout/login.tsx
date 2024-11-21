@@ -77,7 +77,7 @@ const Login: React.FC<AuthProps> = ({
   };
 
   return (
-    <div className="flex justify-center min-h-screen items-center text-black font-open-sans">
+    <div className="dark:bg-gray-900 dark:text-white flex justify-center min-h-screen items-center text-black font-open-sans">
       {!isLoaded ? (
         <div className="text-center">
           <img
@@ -90,7 +90,7 @@ const Login: React.FC<AuthProps> = ({
           <Loading />
         </div>
       ) : (
-        <div className="p-3 sm:border-4 sm:border-green-300 sm:rounded-3xl sm:p-10">
+        <div className="dark:bg-gray-900 p-3 sm:border-4 sm:border-green-300 sm:rounded-3xl sm:p-10">
           <GeolingoSignInFormLogo />
           <h2 className="text-center text-4xl font-bold">Login</h2>
           <form

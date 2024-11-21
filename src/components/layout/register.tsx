@@ -132,7 +132,7 @@ const Register: React.FC<AuthProps> = ({
       ) : (
         <div
           className="p-3 sm:border-4 sm:border-green-300 sm:rounded-3xl sm:p-10
-          dark:bg-gray-900 dark:border-2"
+          dark:bg-gray-900"
         >
           {/* <div className="p-3 sm:bg-green-100 sm:rounded-3xl sm:p-10"> */}
           <GeolingoSignInFormLogo />

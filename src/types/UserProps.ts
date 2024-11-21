@@ -7,4 +7,6 @@ export default interface UserProps {
     setUserData: {
         setUsername: React.Dispatch<React.SetStateAction<string>>;
     }
+    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+    darkMode: boolean;
 }

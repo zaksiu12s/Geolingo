@@ -9,7 +9,15 @@ function App() {
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
 
+  const [darkMode, setDarkMode] = useState(false);
+
   useEffect(() => {
+    const browserDarkMode = localStorage.getItem("darkMode");
+
+    if (browserDarkMode == "true") {
+      setDarkMode(true);
+    }
+
     const isBrowserRegistering = localStorage.getItem("isRegistering");
     const isBrowserLoggedIn = localStorage.getItem("isLoggedIn");
     const browserUsername = localStorage.getItem("username");
@@ -37,6 +45,16 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.removeItem("darkMode");
+    }
+  }, [darkMode]);
+
   return (
     <>
       {isLoggedIn ? (
@@ -45,6 +63,8 @@ function App() {
           setIsLoggedIn={setIsLoggedIn}
           setIsRegistering={setIsRegistering}
           setUserData={{ setUsername: setUsername }}
+          setDarkMode={setDarkMode}
+          darkMode={darkMode}
         />
       ) : isRegistering ? (
         <Register

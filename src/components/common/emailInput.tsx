@@ -3,9 +3,14 @@ import lockedIcon from "../../assets/locked_icon.svg";
 export interface EmailProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   email: string;
+  required?: boolean;
 }
 
-const EmailInput: React.FC<EmailProps> = ({ email, setEmail }) => {
+const EmailInput: React.FC<EmailProps> = ({
+  email,
+  setEmail,
+  required = false,
+}) => {
   return (
     <div className="flex flex-col">
       <label htmlFor="custom-email" className="pl-2">
@@ -27,7 +32,7 @@ const EmailInput: React.FC<EmailProps> = ({ email, setEmail }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          required
+          required={required}
         />
       </div>
     </div>

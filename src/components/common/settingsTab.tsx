@@ -13,7 +13,7 @@ const SettingsTab: React.FC<SettingsTabProps> = ({
     <div
       id={message}
       className={
-        "z-10 w-full px-4 py-2 rounded-tl-lg rounded-tr-lg cursor-pointer  " +
+        "z-10 w-full px-4 py-2 rounded-tl-lg rounded-tr-lg cursor-pointer sm:max-w-64 " +
         (activeTab == message ? "bg-green-500 text-white" : "text-gray-600")
       }
       onClick={handleActiveTab}

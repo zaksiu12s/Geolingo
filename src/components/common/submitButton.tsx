@@ -28,8 +28,14 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
             : " w-full bg-green-400")
         }
       >
-        <div className={isRotatingCircle ? "block" : "hidden"}>
-          <div className="z-20 absolute bg-white w-2 h-10 left-2 -top-2 animate-spinBorder"></div>
+        <div
+          className={
+            isRotatingCircle && isSubmitButtonAnimated
+              ? "opacity-100"
+              : "opacity-0"
+          }
+        >
+          <div className="z-20 absolute bg-white w-2 h-10 left-2 -top-2 animate-spinBorder dark:bg-gray-800"></div>
           <div className="z-30 absolute bg-green-400 w-3 h-3 left-[6px] top-[6px] rounded-full"></div>
         </div>
       </div>
